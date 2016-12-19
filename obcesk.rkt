@@ -2,13 +2,8 @@
 
 (define ns (make-base-namespace))         
 
-;; machine
-(struct ev (e ρ σ κ) #:transparent
-  #:property prop:custom-write (lambda (v p w?)
-                                 (fprintf p "EV ~a\nρ ~a\nκ ~a" (ev-e v) (ev-ρ v) (ev-κ v))))
-(struct ko (d σ κ) #:transparent
-  #:property prop:custom-write (lambda (v p w?)
-                                 (fprintf p "KO v ~a\nκ ~a" (ko-d v) (ko-κ v))))
+(struct ev (e ρ σ κ) #:transparent)
+(struct ko (d σ κ) #:transparent)
 (struct ifk (e1 e2 ρ) #:transparent)
 (struct begink (es ρ) #:transparent)
 (struct letk (x e ρ) #:transparent)
@@ -17,9 +12,7 @@
 (struct membersetk (x e ρ) #:transparent)
 (struct membersetvaluek (x a ρ) #:transparent)
 (struct membergetk (x ρ) #:transparent)
-(struct clo (e ρ) #:transparent
-  #:property prop:custom-write (lambda (v p w?)
-                                 (fprintf p "<clo ~a ~a>" (clo-e v) (clo-ρ v))))
+(struct clo (e ρ) #:transparent)
 (struct ratork (d ρ) #:transparent)
 (struct randk (d es ds ρ) #:transparent)
 (struct addr (a) #:transparent)
@@ -162,8 +155,7 @@
     ((ko (addr a) σ (cons (membergetk x ρ) κ))
      (let* ((d0 (hash-ref σ a))
             (d1 (hash-ref d0 x)))
-       (ko d1 σ κ)))
-    ))
+       (ko d1 σ κ)))))
 
 (define (machine-eval e)
   (let ((s0 (inject e)))
